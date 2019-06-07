@@ -4,56 +4,21 @@ For the Dartmouth class COSC 89.20, Data Science for Health. Project members are
 
 ## Overview
 
-Cardiovascular disease is the leading cause of death throughout the United States, with an estimated 840,768 deaths in 2016. However, through simple lifestyle changes and screening, nearly 200,000 deaths per year could be avoided. In this paper, we explore several machine learning approaches to detect the presence of cardiovascular disease using only standard health information. We leverage both traditional machine learning and state-of-the-art deep learning techniques. The machine learning techniques include a support vector machine (SVM) with a Gaussian RBF kernel, a Naive Bayes classifier, and a random forest (RF) classifier. For our deep learning technique, we also use a multilayer feedforward neural network for this cardiovascular disease detection.
+Cardiovascular disease (CVD) is a term for any type of pathology of the heart which results in inefficient circulation of blood. CVD is responsible for 31% of deaths, worldwide, but 200,000 of deaths could be avoided in just the United States through early diagnosis of CVD. However, current CVD diagnostic procedures are invasive, costly, and requires a clinical setting. Previous studies have generated models to predict CVD based off of this more detailed examination data (e.g. ECG, fluoroscopy, myocardial scintigraphy.) While these tests can provide detailed data, they can often be expensive to both patients and healthcare facilities and may not always be useful toward the diagnostic process. If we can demonstrate that our model can achieve a similar level of accuracy with data that can be obtained more quickly and easily than that from the typical medical exam (especially if this information could be instantaneously gathered via a mobile health device such as a FitBit), then this technology could streamline the diagnostic process and bring medicine to the home. In this project, we attempted to apply machine learning models on two datasets: one containing invasive data that would be collected in a clinic, and another containing non-invasive data that could be collected via survey or commercial activity-tracker. By comparing the performance of predictive models on these two datasets, we may be able to state whether reliable CVD diagnosis is attainable with non-invasive data (that could be collected via activity monitor) or if invasive data is indeed required.
 
-In addition to using these methods to detect cardiovascular disease, we will also investigate which data features are most indicative of disease. Our dataset has standard health information and information on the presence/absence of cardiovascular disease for over 70,000 patients. Here, our objective is not only to design a classifier to identify the presence of cardiovascular disease but also to determine which features and types of data (demographic, examination, and social history) are most useful for predicting disease. With the information gained from this study, physicians could potentially alter their current case history methods to obtain more useful data from their patients. The results from this paper could also aid in streamlining the diagnostic process and improving diagnostic accuracy. 
+## Methodology
 
-Similar studies have also generated models to predict heart disease based off of more detailed examination data, such as that obtained from ECG, fluoroscopy, and myocardial scintigraphy. While these tests can provide detailed data, they can often be expensive to both patients and healthcare facilities and may not always be useful toward the diagnostic process. If we can demonstrate that our model can achieve a similar level of accuracy with data that can be obtained more quickly and easily than that from the typical medical exam (especially if this information could be instantaneously gathered via a mobile health device such as a FitBit), then this technology could streamline the diagnostic process and bring medicine to the home.
+1. Preprocessing and cleaning the dataset. There were several outliers in the non-invasive dataset in which values for BP were abnormally high. Those outlier datapoints were removed, bringing the size of the dataset down from 70,000 to 67,007. All variables were then normalized to remove potential biases.
+2. Detecting the presence or absence of CVD { a binary classification problem. As there exist many machine learning algorithms capable of accurate binary classification, we decided to implement various models and evaluate their performance (as measured by accuracy, precision, recall, and F1 score). Therefore, we chose to utilize several commonly used models, including GNB, SVM, k-NN, LR, and RF. These models implement widely different model architectures between one another, yet all are also known for their reliability and generalizability. We also implemented a MLP to explore whether a deep learning approach could result in a more successful model. 
+3. Comparing the performance of machine learning models trained on the non-invasive dataset versus the more invasive UCI dataset. This involved comparing performance (as measured by accuracy, precision, recall, and F1 score) of logistic regression models for CVD diagnosis after training on each dataset. We used LR for this comparison due to the promising performance of LR on the non-invasive dataset and because LR models have easily-interpretable feature importances. Feature coefficients can range between -1 (strongly pushes classification towards the negative class) and 1 (strongly pushes classification towards the positive class).
+4. Predicting other target variables. We used regression models to predict BP and body mass index (BMI). We mention the performances of these models briefly in this study but do not elaborate on them because none of the regression models demonstrated any notable performance, and because BP and BMI are already simple to measure.
 
 ## Dataset
 
-The cardiovascular disease dataset is an open-source [dataset](https://www.kaggle.com/sulianova/cardiovascular-disease-dataset) found on Kaggle. The data consists of 70,000 patient records (34,979 presenting with cardiovascular disease and 35,021 not presenting with cardiovascular disease) and contains 11 features (4 demographic, 4 examination, and 3 social history):
+Our non-invasive dataset is an open-source Kaggle dataset, although information on how the data was collected and by whom was lacking. The dataset has health information and information on the presence/absence of CVD for 70,000 patients (34,979 presenting with CVD and 35,021 not presenting with CVD). The dataset has 11 features. It can be found [here](https://www.kaggle.com/sulianova/cardiovascular-disease-dataset).
 
-- Age (demographic)
-- Height (demographic)
-- Weight (demographic)
-- Gender (demographic)
-- Systolic blood pressure (examination)
-- Diastolic blood pressure (examination)
-- Cholesterol (examination)
-- Glucose (examination)
-- Smoking (social history)
-- Alcohol intake (social history)
-- Physical activity (social history)
+Our invasive dataset is the open-source UCI CVD dataset. It is a much smaller dataset than our non-invasive dataset, with only 303 samples. Though it does not include behavioral data like our non-invasive dataset, it includes some features that either take more time or are more invasive to obtain, such as fluoroscopy, ECG, and exercise-induced angina. Features of the dataset are either continuous, assigned categorical codes, or are binary. The dataset can be found [here](https://www.google.com/url?q=https%3A%2F%2Fwww.kaggle.com%2Fronitf%2Fheart-disease-uci&sa=D&sntz=1&usg=AFQjCNEEjqV9dwSgVx5ipw5Omt8rVR1RiA).
 
-Some features are numerical, others are assigned categorical codes, and others are binary values. The classes are balanced, but there were more female patients observed than male patients. Further, the continuous-valued features are almost normally distributed; however, most categorical-valued features are skewed towards "normal," as opposed to "high" levels of potentially pathological features. 
+## Results
 
-## TODONE
-RF and SVM from EDA
-
-## TODO
-
-#### Paper
-
-Expand related works:
-
-https://ieeexplore.ieee.org/abstract/document/4358915/
-https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4468223/
-https://link.springer.com/article/10.1007/s10916-016-0536-z
-https://www.sciencedirect.com/science/article/pii/S093336571100056X
-
-#### Code
-- Predict on cardiovascular disease (target) based on original data (Rachael)
-  - improving RF/SVM
-  - trying DNN
-  - Naive Bayes or odds ratio to get prob/risk score assigned to each class
-
-- Predicting other target vars (BMI, blood pressure) in our dataset (Srishti)
-  - Naive Bayes or odds ratio to get prob/risk score assigned to each class
-
-- Combining with UCI dataset (Cara)
-  - train to predict UCI blood sugar (bin), heart rate acheived during exercise (cont), exercise-induced angina (bin) with subset of our data
-  - fill in our data with these vals using the trained model
-  - see if this improves prediction
-
-## References
+The highest accuracy obtained from training and testing on the non-invasive dataset was 60% from logistic regression. From training and testing on the invasive dataset, a logistic regression was able to achieve 87% accuracy. This suggests that invasive data may be necessary for an accurate CVD diagnosis. Future work may include using different types of non-invasive data that, hopefully, would be able to properly train a predictive model.
