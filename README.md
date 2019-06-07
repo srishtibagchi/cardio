@@ -1,6 +1,6 @@
 # Cardiovascular disease diagnosis
 
-For the Dartmouth class COSC 89.20, Data Science for Health. Project members are Srishti Bagchi, Rachael Chacko, and Cara Van Uden.
+For the Dartmouth class COSC 89.20, Data Science for Health. Project members are Srishti Bagchi, Rachael Chacko, and Cara Van Uden. The completed manuscript detailing this project is included here (in this repository.)
 
 ## Overview
 
